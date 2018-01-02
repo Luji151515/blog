@@ -1,6 +1,4 @@
-﻿
-
-//前台调用
+﻿//前台调用
 var $ = function (args) {
 	return new Base(args);
 }
@@ -138,7 +136,7 @@ Base.prototype.find = function (str) {
 }
 
 //获取某一个节点，并返回这个节点对象
-Base.prototype.ge = function (num) {	
+Base.prototype.ge = function (num) {
 	return this.elements[num];
 };
 
@@ -350,24 +348,17 @@ Base.prototype.animate = function (obj) {
 		var attr = obj['attr'] == 'x' ? 'left' : obj['attr'] == 'y' ? 'top' : 
 					   obj['attr'] == 'w' ? 'width' : obj['attr'] == 'h' ? 'height' : 
 					   obj['attr'] == 'o' ? 'opacity' : obj['attr'] != undefined ? obj['attr'] : 'left';
-
-		
-		var start = obj['start'] != undefined ? obj['start'] : 
-						attr == 'opacity' ? parseFloat(getStyle(element, attr)) * 100 : 
-												   parseInt(getStyle(element, attr));
-		
+					   var start = obj['start'] != undefined ? obj['start'] : 
+		attr == 'opacity' ? parseFloat(getStyle(element, attr)) * 100 : 
+			parseInt(getStyle(element, attr));	
 		var t = obj['t'] != undefined ? obj['t'] : 10;												//可选，默认10毫秒执行一次
 		var step = obj['step'] != undefined ? obj['step'] : 20;								//可选，每次运行10像素
-		var unit = obj['unit'] != undefined ? obj['unit'] : 'px';
-		// var unit = obj['unit'] != undefined ? getInner().width
 		var alter = obj['alter'];
 		var target = obj['target'];
 		var mul = obj['mul'];
-		
 		var speed = obj['speed'] != undefined ? obj['speed'] : 6;							//可选，默认缓冲速度为6
 		var type = obj['type'] == 0 ? 'constant' : obj['type'] == 1 ? 'buffer' : 'buffer';		//可选，0表示匀速，1表示缓冲，默认缓冲
-		
-		
+
 		if (alter != undefined && target == undefined) {
 			target = alter + start;
 		} else if (alter == undefined && target == undefined && mul == undefined) {
@@ -394,7 +385,6 @@ Base.prototype.animate = function (obj) {
 
 		clearInterval(element.timer);
 		element.timer = setInterval(function () {
-		    console.log(getStyle(element, attr))
 			/*
 				问题1：多个动画执行了多个列队动画，我们要求不管多少个动画只执行一个列队动画
 				问题2：多个动画数值差别太大，导致动画无法执行到目标值，原因是定时器提前清理掉了
@@ -410,7 +400,6 @@ Base.prototype.animate = function (obj) {
 			for (var i in mul) {
 				attr = i == 'x' ? 'left' : i == 'y' ? 'top' : i == 'w' ? 'width' : i == 'h' ? 'height' : i == 'o' ? 'opacity' : i != undefined ? i : 'left';
 				target = mul[i];
-					
 
 				if (type == 'buffer') {
 					step = attr == 'opacity' ? (target - parseFloat(getStyle(element, attr)) * 100) / speed :
@@ -436,7 +425,6 @@ Base.prototype.animate = function (obj) {
 					if (parseInt(target) != parseInt(parseFloat(getStyle(element, attr)) * 100)) flag = false;
 
 				} else {
-					// console.log(getStyle(element, attr))
 					if (step == 0) {
 						setTarget();
 					} else if (step > 0 && Math.abs(parseInt(getStyle(element, attr)) - target) <= step) {
@@ -444,9 +432,9 @@ Base.prototype.animate = function (obj) {
 					} else if (step < 0 && (parseInt(getStyle(element, attr)) - target) <= Math.abs(step)) {
 						setTarget();
 					} else {
-						element.style[attr] = parseInt(getStyle(element, attr)) + step + unit;
+						element.style[attr] = parseInt(getStyle(element, attr)) + step + 'px';
 					}
-					
+		
 					if (parseInt(target) != parseInt(getStyle(element, attr))) flag = false;
 				}
 				

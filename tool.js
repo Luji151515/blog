@@ -158,12 +158,11 @@ function getScroll() {
 //跨浏览器获取Style
 function getStyle(element, attr) {
 	var value;
-	if (typeof window.getComputedStyle != 'undefined') {//W3C
-		value = window.getComputedStyle(element, null)[attr];
+	if (typeof window.getComputedStyle != 'undefined') {//W3C	
+		value = window.getComputedStyle(element,null)[attr];
 	} else if (typeof element.currentStyle != 'undeinfed') {//IE
 		value = element.currentStyle[attr];
 	}
-	console.log(value)
 	return value;
 }
 
